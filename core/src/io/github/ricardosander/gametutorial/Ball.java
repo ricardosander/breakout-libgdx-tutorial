@@ -25,11 +25,12 @@ public class Ball {
         x += xSpeed;
         y += ySpeed;
 
-        if (x < radius || x > Gdx.graphics.getWidth() - radius) {
+        int diameter = 2 * radius;
+        if (x < diameter || x > Gdx.graphics.getWidth() - diameter) {
             xSpeed = -xSpeed;
         }
 
-        if (y < radius || y > Gdx.graphics.getHeight() - radius) {
+        if (y < diameter || y > Gdx.graphics.getHeight() - diameter) {
             ySpeed = -ySpeed;
         }
     }
@@ -39,29 +40,29 @@ public class Ball {
         shapeRenderer.circle(x, y, radius);
     }
 
-    public void checkCollision(Paddle paddle) {
-        if (collidesWith(paddle)) {
+    public void checkCollision(Collidable object) {
+        if (collidesWith(object)) {
             ySpeed = -ySpeed;
+            object.effect();
             return;
         }
-//        color = Color.WHITE;
     }
 
-    private boolean collidesWith(Paddle paddle) {
-        if (y + radius < paddle.y) {
+    private boolean collidesWith(Collidable object) {
+        if (y + radius < object.getY()) {
             return false;
         }
 
-        if (y - radius > paddle.y + paddle.height) {
+        if (y - radius > object.getY() + object.getHeight()) {
             return false;
         }
 
-        if (x - radius > paddle.x + paddle.width) {
+        if (x - radius > object.getX() + object.getWidth()) {
             return false;
         }
 
 
-        if (x + radius < paddle.x) {
+        if (x + radius < object.getX()) {
             return false;
         }
 

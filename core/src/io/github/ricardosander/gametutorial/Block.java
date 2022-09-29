@@ -1,30 +1,20 @@
 package io.github.ricardosander.gametutorial;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
-public class Paddle implements Collidable {
-
-    private int x;
+public class Block implements Collidable {
+    private final int x;
     private final int y;
     private final int width;
     private final int height;
+    private boolean destroyed;
 
-    public Paddle(int x, int y) {
+    public Block(int x, int y, int width, int height) {
         this.x = x;
         this.y = y;
-        width = 100;
-        height = 10;
-    }
-
-    public void update() {
-        x = Gdx.input.getX() - width / 2;
-        if (x < 10) {
-            x = 10;
-        }
-        if (x > Gdx.graphics.getWidth() - width - 10) {
-            x = Gdx.graphics.getWidth() - width - 10;
-        }
+        this.width = width;
+        this.height = height;
+        this.destroyed = false;
     }
 
     public void draw(ShapeRenderer shapeRenderer) {
@@ -53,6 +43,10 @@ public class Paddle implements Collidable {
 
     @Override
     public void effect() {
+        this.destroyed = true;
+    }
 
+    public boolean isDestroyed() {
+        return destroyed;
     }
 }
